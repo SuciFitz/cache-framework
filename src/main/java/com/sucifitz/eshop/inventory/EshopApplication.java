@@ -3,6 +3,7 @@ package com.sucifitz.eshop.inventory;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @author S zh
  */
 @SpringBootApplication
-// @MapperScan("com.sucifitz.eshop.inventory.mapper")
+@MapperScan("com.sucifitz.eshop.inventory.mapper")
 public class EshopApplication {
 
     /**
@@ -26,7 +27,7 @@ public class EshopApplication {
      * @return DataSource
      */
     @Bean
-    @ConfigurationProperties(prefix = "spring.source")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
         return new DataSource();
     }
@@ -42,7 +43,7 @@ public class EshopApplication {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
+        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));
         return sqlSessionFactoryBean.getObject();
     }
 
