@@ -9,5 +9,17 @@ import com.sucifitz.eshop.inventory.model.User;
  */
 public interface UserService {
 
+    /**
+     * 查询用户信息
+     *
+     * @return 用户信息
+     */
     User findUser();
+
+    /**
+     * 获取缓存的用户信息
+     *
+     * @return 用户信息
+     */
+    User getCacheUserInfo();
 }

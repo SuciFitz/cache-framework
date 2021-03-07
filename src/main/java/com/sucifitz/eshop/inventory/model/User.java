@@ -18,5 +18,5 @@ public class User {
     /**
      * 年龄
      */
-    private String age;
+    private int age;
 }
