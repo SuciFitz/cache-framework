@@ -5,4 +5,6 @@ package com.sucifitz.eshop.inventory.request;
  * @author S zh
  */
 public interface Request {
+
+    void process();
 }

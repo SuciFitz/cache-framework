@@ -14,5 +14,5 @@ public interface UserMapper {
      *
      * @return 用户实体类
      */
-    public User findUserInfo();
+    User findUserInfo();
 }
