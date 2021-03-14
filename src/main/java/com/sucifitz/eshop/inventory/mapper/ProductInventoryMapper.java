@@ -15,4 +15,12 @@ public interface ProductInventoryMapper {
      * @param productInventory 库存
      */
     void updateProductInventory(ProductInventory productInventory);
+
+    /**
+     * 根据商品id查询库存信息
+     *
+     * @param productId 商品id
+     * @return 库存
+     */
+    ProductInventory findProductInventory(Integer productId);
 }

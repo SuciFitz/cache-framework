@@ -9,7 +9,7 @@ import com.sucifitz.eshop.inventory.service.ProductInventoryService;
  * @author Sucifitz
  * @date 2021/3/14 21:17
  */
-public class InventoryCntDataUpdateRequest implements Request{
+public class ProductInventoryDataBaseUpdateRequest implements Request{
 
     /**
      * 商品库存
@@ -21,8 +21,8 @@ public class InventoryCntDataUpdateRequest implements Request{
      */
     private ProductInventoryService productInventoryService;
 
-    public InventoryCntDataUpdateRequest(ProductInventory productInventory,
-                                         ProductInventoryService productInventoryService) {
+    public ProductInventoryDataBaseUpdateRequest(ProductInventory productInventory,
+                                                 ProductInventoryService productInventoryService) {
         this.productInventory = productInventory;
         this.productInventoryService = productInventoryService;
     }
