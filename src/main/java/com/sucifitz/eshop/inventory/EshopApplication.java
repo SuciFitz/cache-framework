@@ -1,5 +1,6 @@
 package com.sucifitz.eshop.inventory;
 
+import com.sucifitz.eshop.inventory.listener.InitListener;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -7,6 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -74,6 +76,18 @@ public class EshopApplication {
         jedisClusterNodes.add(new HostAndPort("sucifitz.top", 8011));
         jedisClusterNodes.add(new HostAndPort("sucifitz.top", 8012));
         return new JedisCluster(jedisClusterNodes);
+    }
+
+    /**
+     * 注册监听器
+     * @return ServletListenerRegistrationBean
+     */
+    @Bean
+    public ServletListenerRegistrationBean<InitListener> servletListenerRegistrationBean() {
+        ServletListenerRegistrationBean<InitListener> bean =
+                new ServletListenerRegistrationBean<>();
+        bean.setListener(new InitListener());
+        return bean;
     }
 
     public static void main(String[] args) {
