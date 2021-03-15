@@ -1,8 +1,8 @@
 package com.sucifitz.eshop.inventory.dao.impl;
 
 import com.sucifitz.eshop.inventory.dao.RedisDAO;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
-import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
 
@@ -14,20 +14,20 @@ import javax.annotation.Resource;
 public class RedisDAOImpl implements RedisDAO {
 
     @Resource
-    private JedisCluster jedisCluster;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Override
     public void set(String key, String value) {
-        jedisCluster.set(key, value);
+        redisTemplate.opsForValue().set(key, value);
     }
 
     @Override
     public String get(String key) {
-        return jedisCluster.get(key);
+        return redisTemplate.opsForValue().get(key);
     }
 
     @Override
     public void delete(String key) {
-        jedisCluster.del(key);
+        redisTemplate.delete(key);
     }
 }

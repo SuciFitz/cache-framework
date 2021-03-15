@@ -65,20 +65,6 @@ public class EshopApplication {
     }
 
     /**
-     * 构建redis集群数据源
-     *
-     * @return JedisCluster
-     */
-    @Bean
-    public JedisCluster jedisClusterFactory() {
-        Set<HostAndPort> jedisClusterNodes = new HashSet<>();
-        jedisClusterNodes.add(new HostAndPort("sucifitz.top", 8010));
-        jedisClusterNodes.add(new HostAndPort("sucifitz.top", 8011));
-        jedisClusterNodes.add(new HostAndPort("sucifitz.top", 8012));
-        return new JedisCluster(jedisClusterNodes);
-    }
-
-    /**
      * 注册监听器
      * @return ServletListenerRegistrationBean
      */
