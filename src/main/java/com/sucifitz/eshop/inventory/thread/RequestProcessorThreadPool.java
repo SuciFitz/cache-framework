@@ -3,9 +3,7 @@ package com.sucifitz.eshop.inventory.thread;
 import com.sucifitz.eshop.inventory.request.Request;
 import com.sucifitz.eshop.inventory.request.RequestQueue;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * 请求处理线程池
@@ -20,15 +18,8 @@ public class RequestProcessorThreadPool {
      * 都可以做到一个外部文件中
      * 此处简化
      */
-    private ExecutorService threadPool = Executors.newFixedThreadPool(10);
-
-    /// TODO: 2021/3/14 转为ThreadPoolExecutor创建线程池
-    // private ExecutorService fixedThreadPool(int nThreads) {
-    //     return new ThreadPoolExecutor(nThreads, nThreads,
-    //             0L, TimeUnit.MILLISECONDS,
-    //             new LinkedBlockingQueue<Runnable>());
-    // }
-
+    private final ExecutorService threadPool = new ThreadPoolExecutor(10, 10,
+            0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new NameThreadFactory());
 
     public RequestProcessorThreadPool() {
         RequestQueue queues = RequestQueue.getInstance();

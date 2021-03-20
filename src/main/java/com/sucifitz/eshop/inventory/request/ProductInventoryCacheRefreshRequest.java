@@ -8,7 +8,7 @@ import com.sucifitz.eshop.inventory.service.ProductInventoryService;
  * @author Sucifitz
  * @date 2021/3/14 21:53
  */
-public class ProductInventoryCacheReloadRequest implements Request{
+public class ProductInventoryCacheRefreshRequest implements Request{
 
     /**
      * 商品id
@@ -20,8 +20,8 @@ public class ProductInventoryCacheReloadRequest implements Request{
      */
     private ProductInventoryService productInventoryService;
 
-    public ProductInventoryCacheReloadRequest(Integer productId,
-                                                 ProductInventoryService productInventoryService) {
+    public ProductInventoryCacheRefreshRequest(Integer productId,
+                                               ProductInventoryService productInventoryService) {
         this.productId = productId;
         this.productInventoryService = productInventoryService;
     }
@@ -32,5 +32,15 @@ public class ProductInventoryCacheReloadRequest implements Request{
         ProductInventory inventory = productInventoryService.findProductInventory(productId);
         // 将库存更新到缓存中
         productInventoryService.setProductInventoryCache(inventory);
+    }
+
+    /**
+     * 获取商品id
+     *
+     * @return 商品id
+     */
+    @Override
+    public Integer getProductId() {
+        return productId;
     }
 }

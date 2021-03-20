@@ -16,7 +16,7 @@ public class RequestProcessorThread implements Callable<Boolean> {
     /**
      * 监控的内存队列
      */
-    private ArrayBlockingQueue<Request> queue;
+    private final ArrayBlockingQueue<Request> queue;
 
     public RequestProcessorThread(ArrayBlockingQueue<Request> queue) {
         this.queue = queue;
@@ -24,9 +24,16 @@ public class RequestProcessorThread implements Callable<Boolean> {
 
     @Override
     public Boolean call() throws Exception {
-        while (true) {
-            break;
+        try {
+            while (true) {
+                // blocking 阻塞队列
+                Request request = queue.take();
+                // 执行request操作
+                request.process();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return null;
+        return true;
     }
 }

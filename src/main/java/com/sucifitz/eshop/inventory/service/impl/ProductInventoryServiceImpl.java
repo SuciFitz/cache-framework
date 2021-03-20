@@ -5,6 +5,7 @@ import com.sucifitz.eshop.inventory.mapper.ProductInventoryMapper;
 import com.sucifitz.eshop.inventory.model.ProductInventory;
 import com.sucifitz.eshop.inventory.service.ProductInventoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 
@@ -43,5 +44,21 @@ public class ProductInventoryServiceImpl implements ProductInventoryService {
     public void setProductInventoryCache(ProductInventory productInventory) {
         String key = "product:inventory:" + productInventory.getProductId();
         redisDAO.set(key, String.valueOf(productInventory.getInventoryCnt()));
+    }
+
+    @Override
+    public ProductInventory getProductInventory(Integer productId) {
+        String key = "product:inventory:" + productId;
+        String res = redisDAO.get(key);
+        long inventoryCnt;
+        if (StringUtils.hasLength(res)) {
+            try {
+                inventoryCnt = Long.parseLong(res);
+                return new ProductInventory(productId, inventoryCnt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

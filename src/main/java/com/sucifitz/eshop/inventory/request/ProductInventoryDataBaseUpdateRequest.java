@@ -9,7 +9,7 @@ import com.sucifitz.eshop.inventory.service.ProductInventoryService;
  * @author Sucifitz
  * @date 2021/3/14 21:17
  */
-public class ProductInventoryDataBaseUpdateRequest implements Request{
+public class ProductInventoryDataBaseUpdateRequest implements Request {
 
     /**
      * 商品库存
@@ -33,5 +33,15 @@ public class ProductInventoryDataBaseUpdateRequest implements Request{
         productInventoryService.removeProductInventoryCache(productInventory);
         // 修改数据库库存
         productInventoryService.updateProductInventory(productInventory);
+    }
+
+    /**
+     * 获取商品id
+     *
+     * @return 商品id
+     */
+    @Override
+    public Integer getProductId() {
+        return productInventory.getProductId();
     }
 }

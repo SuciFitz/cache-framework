@@ -15,7 +15,7 @@ public class RequestQueue {
     /**
      * 内存队列
      */
-    private List<ArrayBlockingQueue<Request>> queues = new ArrayList<>();
+    private final List<ArrayBlockingQueue<Request>> queues = new ArrayList<>();
 
     /**
      * 单例实现方式：静态内部类
@@ -59,5 +59,24 @@ public class RequestQueue {
      */
     public void addQueue(ArrayBlockingQueue<Request> queue) {
         this.queues.add(queue);
+    }
+
+    /**
+     * 获取内存队列的数量
+     *
+     * @return 内存队列的数量
+     */
+    public int queueSize() {
+        return queues.size();
+    }
+
+    /**
+     * 获取内存队列
+     *
+     * @param index 索引
+     * @return 内存队列
+     */
+    public ArrayBlockingQueue<Request> getQueue(int index) {
+        return queues.get(index);
     }
 }
