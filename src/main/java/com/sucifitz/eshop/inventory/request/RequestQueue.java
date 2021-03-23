@@ -2,7 +2,9 @@ package com.sucifitz.eshop.inventory.request;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 请求内存队列
@@ -18,6 +20,11 @@ public class RequestQueue {
     private final List<ArrayBlockingQueue<Request>> queues = new ArrayList<>();
 
     /**
+     * 标识位map
+     */
+    private final Map<Integer, Boolean> flagMap = new ConcurrentHashMap<>();
+
+    /**
      * 单例实现方式：静态内部类
      */
     private static class Singleton {
@@ -28,9 +35,23 @@ public class RequestQueue {
             INSTANCE = new RequestQueue();
         }
 
+        /**
+         * 单例模式
+         * 默认构造器私有化
+         */
+        private Singleton() {
+        }
+
         public static RequestQueue getInstance() {
             return INSTANCE;
         }
+    }
+
+    /**
+     * 单例模式
+     * 默认构造器私有化
+     */
+    private RequestQueue() {
     }
 
     /**
@@ -78,5 +99,14 @@ public class RequestQueue {
      */
     public ArrayBlockingQueue<Request> getQueue(int index) {
         return queues.get(index);
+    }
+
+    /**
+     * 获取标识位map
+     *
+     * @return 标识位map
+     */
+    public Map<Integer, Boolean> getFlagMap() {
+        return flagMap;
     }
 }

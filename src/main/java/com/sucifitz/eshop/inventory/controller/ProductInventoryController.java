@@ -62,7 +62,7 @@ public class ProductInventoryController {
         ProductInventory productInventory;
         try {
             Request request = new ProductInventoryCacheRefreshRequest(
-                    productId, productInventoryService);
+                    productId, productInventoryService, false);
             requestAsyncProcessService.process(request);
             // 记录开始时间
             long startTime = System.currentTimeMillis();
@@ -82,6 +82,10 @@ public class ProductInventoryController {
             // 读取缓存失败，尝试从数据库获取
             productInventory = productInventoryService.findProductInventory(productId);
             if (productInventory != null) {
+                request = new ProductInventoryCacheRefreshRequest(
+                        productId, productInventoryService, false);
+                // 读操作之后，并行刷新缓存，保证数据一致
+                requestAsyncProcessService.process(request);
                 return productInventory;
             }
         } catch (Exception e) {

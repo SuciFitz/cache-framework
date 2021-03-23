@@ -3,6 +3,7 @@ package com.sucifitz.eshop.inventory.service.impl;
 import com.sucifitz.eshop.inventory.request.Request;
 import com.sucifitz.eshop.inventory.request.RequestQueue;
 import com.sucifitz.eshop.inventory.service.RequestAsyncProcessService;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @author Sucifitz
  * @date 2021/3/20 19:41
  */
+@Service("requestAsyncProcessService")
 public class RequestAsyncProcessServiceImpl implements RequestAsyncProcessService {
 
     @Override

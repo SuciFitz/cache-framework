@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @author Sucifitz
  * @date 2021/3/14 21:42
  */
-@Service("ProductInventoryService")
+@Service("productInventoryService")
 public class ProductInventoryServiceImpl implements ProductInventoryService {
 
     @Resource

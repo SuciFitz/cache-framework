@@ -15,4 +15,11 @@ public interface Request {
      * @return 商品id
      */
     Integer getProductId();
+
+    /**
+     * 是否强制刷新标识
+     *
+     * @return 强制刷新标识
+     */
+    boolean isForceRefresh();
 }
