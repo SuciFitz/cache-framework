@@ -4,6 +4,7 @@ import com.sucifitz.eshop.inventory.request.ProductInventoryCacheRefreshRequest;
 import com.sucifitz.eshop.inventory.request.ProductInventoryDataBaseUpdateRequest;
 import com.sucifitz.eshop.inventory.request.Request;
 import com.sucifitz.eshop.inventory.request.RequestQueue;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -15,6 +16,7 @@ import java.util.concurrent.Callable;
  * @author Sucifitz
  * @date 2021/3/14 20:57
  */
+@Slf4j
 public class RequestProcessorThread implements Callable<Boolean> {
 
     /**
@@ -32,6 +34,7 @@ public class RequestProcessorThread implements Callable<Boolean> {
             while (true) {
                 // blocking 阻塞队列
                 Request request = queue.take();
+                log.debug("工作线程处理请求，商品id={}", request.getProductId());
                 boolean forceRefresh = request.isForceRefresh();
                 // 如果不是强制刷新，需要去重
                 if (!forceRefresh) {
@@ -55,7 +58,6 @@ public class RequestProcessorThread implements Callable<Boolean> {
                         }
                     }
                 }
-                System.out.println("工作线程处理请求：商品id=" + request.getProductId());
                 // 执行request操作
                 request.process();
             }

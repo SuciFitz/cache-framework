@@ -3,6 +3,7 @@ package com.sucifitz.eshop.inventory.service.impl;
 import com.sucifitz.eshop.inventory.request.Request;
 import com.sucifitz.eshop.inventory.request.RequestQueue;
 import com.sucifitz.eshop.inventory.service.RequestAsyncProcessService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -14,6 +15,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * @date 2021/3/20 19:41
  */
 @Service("requestAsyncProcessService")
+@Slf4j
 public class RequestAsyncProcessServiceImpl implements RequestAsyncProcessService {
 
     @Override
@@ -47,6 +49,7 @@ public class RequestAsyncProcessServiceImpl implements RequestAsyncProcessServic
         int hash = key == null ? 0 : (h = key.hashCode()) ^ (h >>> 16);
         // 对哈希值取模，将hash值路由到指定的内存队列中
         int index = (requestQueue.queueSize() - 1) & hash;
+        log.debug("路由内存队列，商品id={}，队列索引={}", productId, index);
         return requestQueue.getQueue(index);
     }
 }

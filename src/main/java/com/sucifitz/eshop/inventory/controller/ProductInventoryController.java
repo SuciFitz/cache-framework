@@ -7,6 +7,7 @@ import com.sucifitz.eshop.inventory.request.Request;
 import com.sucifitz.eshop.inventory.service.ProductInventoryService;
 import com.sucifitz.eshop.inventory.service.RequestAsyncProcessService;
 import com.sucifitz.eshop.inventory.vo.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
  * @date 2021/3/20 20:29
  */
 @Controller
+@Slf4j
 public class ProductInventoryController {
 
     @Resource
@@ -38,6 +40,7 @@ public class ProductInventoryController {
     @ResponseBody
     public Response updateProductInventory(ProductInventory productInventory) {
         Response response;
+        log.debug("更新商品库存请求，商品id：{}，商品库存：{}", productInventory.getProductId(), productInventory.getInventoryCnt());
         try {
             Request request = new ProductInventoryDataBaseUpdateRequest(
                     productInventory, productInventoryService);
@@ -59,6 +62,7 @@ public class ProductInventoryController {
     @RequestMapping("getProductInventory")
     @ResponseBody
     public ProductInventory getProductInventory(Integer productId) {
+        log.debug("收到商品库存读请求，商品id={}", productId);
         ProductInventory productInventory;
         try {
             Request request = new ProductInventoryCacheRefreshRequest(
@@ -69,6 +73,8 @@ public class ProductInventoryController {
             long waitTime = 0L;
             // 尝试读取缓存
             while (waitTime <= 200) {
+                // 200ms内，等待之前的请求刷新缓存，直到读取成功
+                // log.debug("waitTime={}", waitTime);
                 // 消耗时间超过200ms退出循环
                 productInventory = productInventoryService.getProductInventory(productId);
                 if (productInventory == null) {
@@ -76,6 +82,7 @@ public class ProductInventoryController {
                     Thread.sleep(20);
                     waitTime = System.currentTimeMillis() - startTime;
                 } else {
+                    log.debug("在200ms内读取到了商品库存缓存，商品id={}，商品库存={}", productId, productInventory.getInventoryCnt());
                     return productInventory;
                 }
             }

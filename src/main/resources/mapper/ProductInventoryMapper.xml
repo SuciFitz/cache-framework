@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sucifitz.eshop.inventory.mapper.ProductInventoryMapper">
     <update id="updateProductInventory" parameterType="com.sucifitz.eshop.inventory.model.ProductInventory">
-        update product_inventory set inventory_cnt = #{inventoryCnt} where priduct_id = #{productId}
+        update product_inventory set inventory_cnt = #{inventoryCnt} where product_id = #{productId}
     </update>
 
     <select id="findProductInventory" resultType="com.sucifitz.eshop.inventory.model.ProductInventory">
-        select pruduct_id productId, inventory_cnt inventoryCnt from product_inventory where product_id = #{productId}
+        select product_id productId, inventory_cnt inventoryCnt from product_inventory where product_id = #{productId}
     </select>
 </mapper>

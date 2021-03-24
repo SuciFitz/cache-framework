@@ -14,12 +14,12 @@ import javax.annotation.Resource;
 @Repository("redisDAO")
 public class RedisDAOImpl implements RedisDAO {
 
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
     private final ValueOperations<String, String> valueOperations;
 
     public RedisDAOImpl(RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate;
         this.valueOperations = redisTemplate.opsForValue();
     }
 
