@@ -7,3 +7,14 @@ spring:
     username: eshop
     password: eshop
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # redis配置
+  redis:
+    cluster:
+      # 集群节点
+      nodes: sucifitz.top:8010, sucifitz.top:8011, sucifitz.top:8012
+    # 密码
+    password:
+logging:
+  level:
+    com.sucifitz.eshop.inventory: debug

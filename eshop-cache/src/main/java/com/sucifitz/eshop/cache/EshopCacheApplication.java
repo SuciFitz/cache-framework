@@ -32,20 +32,20 @@ public class EshopCacheApplication {
         return new DataSource();
     }
 
-    /**
-     * 构建mybatis入口类：sqlSessionFactory
-     *
-     * @return SqlSessionFactory
-     * @throws Exception getResource getObject
-     */
-    @Bean
-    public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource());
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));
-        return sqlSessionFactoryBean.getObject();
-    }
+    // /**
+    //  * 构建mybatis入口类：sqlSessionFactory
+    //  *
+    //  * @return SqlSessionFactory
+    //  * @throws Exception getResource getObject
+    //  */
+    // @Bean
+    // public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
+    //     SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+    //     sqlSessionFactoryBean.setDataSource(dataSource());
+    //     PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    //     sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));
+    //     return sqlSessionFactoryBean.getObject();
+    // }
 
     /**
      * 构建事务管理器
