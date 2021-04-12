@@ -11,10 +11,44 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class NameThreadFactory implements ThreadFactory {
 
-    private final AtomicInteger num = new AtomicInteger();
+    /**
+     * 线程池编号
+     */
+    private static final AtomicInteger POOL_NUMBER = new AtomicInteger(1);
+
+    /**
+     * 线程组
+     */
+    private final ThreadGroup group;
+
+    /**
+     * 线程池中的线程编号
+     */
+    private final AtomicInteger num = new AtomicInteger(1);
+
+    /**
+     * 线程池中线程名称前缀
+     */
+    private final String namePrefix;
+
+    NameThreadFactory(String name) {
+        SecurityManager s = System.getSecurityManager();
+        group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup();
+        if (null == name || name.isEmpty()) {
+            name = "pool";
+        }
+        namePrefix = name + "-" + POOL_NUMBER.getAndIncrement() + "-thread-";
+    }
 
     @Override
     public Thread newThread(Runnable r) {
-        return new Thread(r, "thread-" + num.getAndIncrement());
+        Thread t = new Thread(group, r, namePrefix + num.getAndIncrement(), 0);
+        if (t.isDaemon()) {
+            t.setDaemon(false);
+        }
+        if (t.getPriority() != Thread.NORM_PRIORITY) {
+            t.setPriority(Thread.NORM_PRIORITY);
+        }
+        return t;
     }
 }

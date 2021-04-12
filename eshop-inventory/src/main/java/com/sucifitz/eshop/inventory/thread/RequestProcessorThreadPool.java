@@ -13,13 +13,15 @@ import java.util.concurrent.*;
  */
 public class RequestProcessorThreadPool {
 
+    public static final String NAME = "Request-Processor-ThreadPool";
+
     /**
      * 在实际项目中，你设置的线程大小是多少，每个线程监控的内存队列大小是多少
      * 都可以做到一个外部文件中
      * 此处简化
      */
     private final ExecutorService threadPool = new ThreadPoolExecutor(10, 10,
-            0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new NameThreadFactory());
+            0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new NameThreadFactory(NAME));
 
     public RequestProcessorThreadPool() {
         RequestQueue queues = RequestQueue.getInstance();
