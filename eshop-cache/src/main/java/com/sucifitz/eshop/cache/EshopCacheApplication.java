@@ -1,5 +1,6 @@
 package com.sucifitz.eshop.cache;
 
+import com.sucifitz.eshop.cache.listener.InitListener;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -7,10 +8,13 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.servlet.ServletContextListener;
 
 /**
  * 缓存服务入口
@@ -68,6 +72,13 @@ public class EshopCacheApplication {
     //     bean.setListener(new InitListener());
     //     return bean;
     // }
+
+    @Bean
+    public ServletListenerRegistrationBean<ServletContextListener> servletListenerRegistrationBean() {
+        ServletListenerRegistrationBean<ServletContextListener> bean = new ServletListenerRegistrationBean<>();
+        bean.setListener(new InitListener());
+        return bean;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(EshopCacheApplication.class, args);
