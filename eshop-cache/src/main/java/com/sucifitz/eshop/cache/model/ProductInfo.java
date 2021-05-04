@@ -12,6 +12,7 @@ import lombok.Data;
 public class ProductInfo {
 
     private Long id;
+    private Long shopId;
     private String name;
     private Double price;
     /**

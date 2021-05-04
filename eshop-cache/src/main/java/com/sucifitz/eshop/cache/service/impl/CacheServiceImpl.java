@@ -59,4 +59,16 @@ public class CacheServiceImpl implements CacheService {
         String key = "shop_info_" + shopInfo.getId();
         jedisCluster.set(key, JSONObject.toJSONString(shopInfo));
     }
+
+    @Override
+    @Cacheable(value = CACHE_NAME, key = "'product_info_' + #productId")
+    public ProductInfo getProductInfoFromLocalCache(Long productId) {
+        return null;
+    }
+
+    @Override
+    @Cacheable(value = CACHE_NAME, key = "'shop_info_' + #shopId")
+    public ShopInfo getShopInfoFromLocalCache(Long shopId) {
+        return null;
+    }
 }

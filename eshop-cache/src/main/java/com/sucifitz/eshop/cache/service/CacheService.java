@@ -55,4 +55,20 @@ public interface CacheService {
      * @param shopInfo 店铺信息
      */
     void saveShopInfo2RedisCache(ShopInfo shopInfo);
+
+    /**
+     * 从本地ehcache中获取商品信息
+     *
+     * @param productId 商品id
+     * @return 商品信息
+     */
+    ProductInfo getProductInfoFromLocalCache(Long productId);
+
+    /**
+     * 从本地ehcache中获取店铺信息
+     *
+     * @param shopId 店铺id
+     * @return 商品信息
+     */
+    ShopInfo getShopInfoFromLocalCache(Long shopId);
 }
