@@ -14,6 +14,24 @@ public class ProductInfo {
     private Long id;
     private String name;
     private Double price;
-
-
+    /**
+     * 图片列表
+     */
+    private String pictureList;
+    /**
+     * 规格
+     */
+    private String specification;
+    /**
+     * 额外服务
+     */
+    private String service;
+    /**
+     * 颜色
+     */
+    private String color;
+    /**
+     * 尺寸
+     */
+    private String size;
 }
