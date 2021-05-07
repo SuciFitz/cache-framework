@@ -9,6 +9,8 @@ import kafka.consumer.KafkaStream;
 import kafka.message.MessageAndMetadata;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.Resource;
+
 /**
  * @author szh
  * @date 2021/5/2
@@ -18,6 +20,7 @@ public class KafkaMessageProcessor implements Runnable {
 
     private final KafkaStream<byte[], byte[]> kafkaStream;
 
+    @Resource
     private final CacheService cacheService;
 
     public KafkaMessageProcessor(KafkaStream<byte[], byte[]> kafkaStream) {
@@ -32,15 +35,20 @@ public class KafkaMessageProcessor implements Runnable {
             String message = new String(messageAndMetadata.message());
 
             // message转为json
-            JSONObject msg = JSONObject.parseObject(message);
-            // 提取对应服务标识
-            String serviceId = msg.getString("serviceId");
+            JSONObject msg;
+            try {
+                msg = JSONObject.parseObject(message);
+                // 提取对应服务标识
+                String serviceId = msg.getString("serviceId");
 
-            // 如果是商品信息服务
-            if ("productInfoService".equals(serviceId)) {
-                processProductInfoChangeMessage(msg);
-            } else if ("shopInfoService".equals(serviceId)) {
-                processShopInfoChangeMessage(msg);
+                // 如果是商品信息服务
+                if ("productInfoService".equals(serviceId)) {
+                    processProductInfoChangeMessage(msg);
+                } else if ("shopInfoService".equals(serviceId)) {
+                    processShopInfoChangeMessage(msg);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

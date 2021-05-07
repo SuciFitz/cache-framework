@@ -4,11 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.sucifitz.eshop.cache.model.ProductInfo;
 import com.sucifitz.eshop.cache.model.ShopInfo;
 import com.sucifitz.eshop.cache.service.CacheService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sucifitz.eshop.cache.utils.RedisUtil;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.JedisCluster;
+
+import javax.annotation.Resource;
 
 /**
  * 缓存服务实现类
@@ -16,12 +17,13 @@ import redis.clients.jedis.JedisCluster;
  * @author Sucifitz
  * @date 2021/3/28 19:51
  */
-@Service("cacheServiceImpl")
+@Service("cacheService")
 public class CacheServiceImpl implements CacheService {
 
     private static final String CACHE_NAME = "local";
 
-    private JedisCluster jedisCluster;
+    @Resource
+    private RedisUtil redis;
 
     @Override
     @CachePut(value = CACHE_NAME, key = "'key_' + #productInfo.getId()")
@@ -45,7 +47,7 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void saveProductInfo2RedisCache(ProductInfo productInfo) {
         String key = "product_info_" + productInfo.getId();
-        jedisCluster.set(key, JSONObject.toJSONString(productInfo));
+        redis.set(key, JSONObject.toJSONString(productInfo));
     }
 
     @Override
@@ -57,7 +59,7 @@ public class CacheServiceImpl implements CacheService {
     @Override
     public void saveShopInfo2RedisCache(ShopInfo shopInfo) {
         String key = "shop_info_" + shopInfo.getId();
-        jedisCluster.set(key, JSONObject.toJSONString(shopInfo));
+        redis.set(key, JSONObject.toJSONString(shopInfo));
     }
 
     @Override
